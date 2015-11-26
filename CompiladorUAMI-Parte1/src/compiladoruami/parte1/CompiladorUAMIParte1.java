@@ -7,7 +7,7 @@ package compiladoruami.parte1;
 
 /**
  *
- * @author 
+ * @author Cecy, Lety & Gab
  * 
  * 
  */
@@ -19,5 +19,7 @@ public class CompiladorUAMIParte1 {
         
         System.out.println("Hola mundo");
     }
+    
+    
     
 }
