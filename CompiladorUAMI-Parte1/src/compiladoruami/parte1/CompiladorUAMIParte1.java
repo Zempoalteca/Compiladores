@@ -7,7 +7,7 @@ package compiladoruami.parte1;
 
 /**
  *
- * @author Zempoalteca
+ * @author 
  */
 public class CompiladorUAMIParte1 {
 
