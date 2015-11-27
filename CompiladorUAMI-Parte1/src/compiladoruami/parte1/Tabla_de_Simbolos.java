@@ -19,6 +19,7 @@ public class Tabla_de_Simbolos {
         ultimo_entrar = 0;
         TABLA_DE_SIMBOLOS = new String[SYMMAX][2];
 //
+        //
     }
 
     public int Buscar_Simbolo(String Lexema) {
