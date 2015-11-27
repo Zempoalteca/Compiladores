@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author Cecy y Lety
+ * @author Cecy, Lety & Gab
  */
 public class UAMI {
 
