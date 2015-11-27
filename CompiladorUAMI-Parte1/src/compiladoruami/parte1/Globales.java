@@ -7,7 +7,7 @@ package compiladoruami.parte1;
 
 /**
  *
- * @author Gabriel Zempoalteca Garrido
+ * @author Cecy, Lety & Gab
  */
 public class Globales {
     public final String PROGRAMA = "programa";
