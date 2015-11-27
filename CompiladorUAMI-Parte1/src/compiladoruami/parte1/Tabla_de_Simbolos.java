@@ -33,12 +33,12 @@ public class Tabla_de_Simbolos {
     }
 
     public String Obtener_Token(int i) {
-        return TABLA_DE_SIMBOLOS[i][1].toString();
+        return TABLA_DE_SIMBOLOS[i][1];
 
     }
 
     public String Obtener_Lexema(int i) {
-        return TABLA_DE_SIMBOLOS[i][0].toString();
+        return TABLA_DE_SIMBOLOS[i][0];
 
     }
 
