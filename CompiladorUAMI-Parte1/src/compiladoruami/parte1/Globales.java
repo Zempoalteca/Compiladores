@@ -18,7 +18,7 @@ public class Globales {
     public final String READ = "read";
     public final String HECHO = "FIN DE ARCHIVO";
     public final String EOS = "EOS";
-    //public final String ASIGNACION = "ASIGNACION";
+    public final String ASG = "ASIGNACION";
     public final String ID = "IDENTIFICADOR";
     public final String NUM_ENT = "ENTERO";
     public final String CADENA = "CADENA";
