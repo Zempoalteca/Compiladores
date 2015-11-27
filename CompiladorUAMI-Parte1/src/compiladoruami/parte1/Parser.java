@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Zempoalteca
+ * @author Cecy, Lety & Gab
  */
 public class Parser {
 
