@@ -7,7 +7,7 @@ package compiladoruami.parte1;
 
 /**
  *
- * @author Cecy, Lety y Gab
+ * @author Gabriel Zempoalteca Garrido
  */
 public class Globales {
     public final String PROGRAMA = "programa";
@@ -18,7 +18,7 @@ public class Globales {
     public final String READ = "read";
     public final String HECHO = "FIN DE ARCHIVO";
     public final String EOS = "EOS";
-    public final String ASG = "ASIGNACION";
+    public final String ASIGNACION = "ASIGNACION";
     public final String ID = "IDENTIFICADOR";
     public final String NUM_ENT = "ENTERO";
     public final String CADENA = "CADENA";
@@ -39,7 +39,7 @@ public class Globales {
     public final String LT = "<";
     public final String LE = "<=";
     public final String EQ = "==";
-    public final String ASIGNACION = "=";
+    public final String ASG = "=";
     public final String GE = ">=";
     public final String GT = ">";
     public final String NE = "!=";
@@ -57,5 +57,4 @@ public class Globales {
     public final String ERROR = "ERROR LEXICOGRAFICO";
     public final String TOKEN_INV = "TOKEN INVALIDO";
     public final String RESTO_MUNDO = "RESTO DEL MUNDO";
-    public final String error="ERROR SINTACTICO";
 }
