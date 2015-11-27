@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Gabriel Zempoalteca Garrido
+ * @author Cecy, Lety & Gab
  */
 public class Alex {
 
