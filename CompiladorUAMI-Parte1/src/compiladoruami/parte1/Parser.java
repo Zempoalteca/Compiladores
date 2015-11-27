@@ -13,51 +13,61 @@ import java.io.IOException;
  */
 public class Parser {
 
-    String[] preanalisis = new String[2];
+    String[] preanalisis;
+    public Alex A1;
+    public Globales G1;
+    public Tabla_de_Simbolos T1;
 
-    void Inicio(Alex A1, Globales G1, Tabla_de_Simbolos T1) throws IOException {
+    public Parser(Alex A, Globales G, Tabla_de_Simbolos T) {
+        preanalisis = new String[2];
+        A1 = A;
+        G1 = G;
+        T1 = T;
+    }
+
+    void Inicio() throws IOException {
         int pos = 0;
-        //do {
-            pos = A1.ALexico(G1, T1);
-        //} while (pos < 0);
+        pos = A1.ALexico(G1, T1);
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
-        Encabezado(A1, G1, T1);
-        Secuencia(A1, G1, T1);
-        Parea(A1, G1, T1, G1.HECHO);
+        Encabezado();
+        Secuencia();
+        Parea(G1.HECHO);
     }
 
-    private void Encabezado(Alex A1, Globales G1, Tabla_de_Simbolos T1) throws IOException {
-        Parea(A1, G1, T1, G1.PROGRAMA);
-        Parea(A1, G1, T1, G1.ID);
-        Parea(A1, G1, T1, ";");
+    private void Encabezado() throws IOException {
+        Parea(G1.PROGRAMA);
+        Parea(G1.ID);
+        Parea(";");
     }
 
-    private void Secuencia(Alex A1, Globales G1, Tabla_de_Simbolos T1) throws IOException {
-        Parea(A1, G1, T1, G1.COMIENZA);
+    private void Secuencia() throws IOException {
+        Parea(G1.COMIENZA);
         while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
-            Asignacion(A1, G1, T1);
+            Asignacion();
         }
-        Parea(A1, G1, T1, G1.TERMINA);
+        Parea(G1.TERMINA);
     }
 
-    private void Asignacion(Alex A1, Globales G1, Tabla_de_Simbolos T1) throws IOException {
-        Parea(A1, G1, T1, G1.ID);
-        Parea(A1, G1, T1, G1.ASG);
-        Parea(A1, G1, T1, G1.NUM_ENT);
-        Parea(A1, G1, T1, ";");
+    private void Asignacion() throws IOException {
+        Parea(G1.ID);
+        Parea(G1.ASG);
+        Parea(G1.NUM_ENT);
+        Parea(";");
     }
 
-    private void Parea(Alex A1, Globales G1, Tabla_de_Simbolos T1, String se_espera) throws IOException {
+    public boolean Parea(String se_espera) throws IOException {
         if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) { //preanalisis[0].equals(se_espera)
             int pos = A1.ALexico(G1, T1);
-            if (pos >= 0) {
-                preanalisis[0] = T1.Obtener_Lexema(pos);
-                preanalisis[1] = T1.Obtener_Token(pos);
-            }
+            preanalisis[0] = T1.Obtener_Lexema(pos);
+            preanalisis[1] = T1.Obtener_Token(pos);
+            System.out.println("Preanalisis [0]:" + preanalisis[0] + "\n"
+                    + "Preanalisis[1]:" + preanalisis[1] + "\n");
+            return true;
         } else {
             UAMI.errores++;
             UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", se esperaba: \"" + se_espera + "\", tipo de error: ERROR SINTACTICO\n");
+            return false;
         }
     }
 
