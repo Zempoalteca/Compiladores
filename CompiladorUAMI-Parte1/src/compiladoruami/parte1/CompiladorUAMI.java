@@ -5,15 +5,30 @@
  */
 package compiladoruami.parte1;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
- * @author Zempoalteca
+ * @author Cecy, Lety & Gab
  */
 public class CompiladorUAMI extends javax.swing.JFrame {
 
     /**
      * Creates new form CompiladorUAMI
      */
+    
+    UAMI v1;
+    String texto;
+    boolean arc_seleccionado = false;
+    File fteSeleccionado;
+    
     public CompiladorUAMI() {
         initComponents();
     }
@@ -277,6 +292,104 @@ public class CompiladorUAMI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    
+        private void creaArchivo() {
+        try {
+            JFileChooser file = new JFileChooser();
+            file.showSaveDialog(this);
+            File guarda = file.getSelectedFile();
+            if (guarda != null) {
+                String ruta = guarda + ".fte";
+                FileWriter save = new FileWriter(ruta);
+                save.write(panelArchFte.getText());
+                save.close();
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                arc_seleccionado = true;
+                fteSeleccionado = new File(ruta);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Su archivo no se ha guardado!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void limpiarVentana() {
+        panelArchErr.setText("");
+        panelArchFte.setText("");
+        panelArchTpl.setText("");
+        panelCompilacion.setText("");
+    }
+
+    private String abrirArchivo() {
+        int opcion;
+        String aux;
+        texto = "";
+        try {
+            JFileChooser archivo = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Solo archivos *.fte :D", "fte");
+            archivo.setFileFilter(filter);
+            opcion = archivo.showOpenDialog(null);
+            if (opcion == JFileChooser.APPROVE_OPTION) {
+                fteSeleccionado = archivo.getSelectedFile();
+                FileReader archivos = new FileReader(fteSeleccionado);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto += aux + "\n";
+                }
+                lee.close();
+                arc_seleccionado = true;
+            }
+            if (opcion == 1) {
+                texto = "";
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo *.fte!");
+        }
+        return texto;
+    }
+
+    private void compila() {
+        try {
+            if (arc_seleccionado) {
+                String ruta = fteSeleccionado.getAbsolutePath();
+                //System.out.println(ruta);
+                String rutaSinExt = ruta.substring(0, ruta.length() - 4);
+                panelCompilacion.setText("");
+                v1 = new UAMI();
+                v1.compilador(ruta, panelCompilacion);
+                //System.out.println("LLego hasta aca");
+                panelArchTpl.setText(setCompilation(rutaSinExt + ".tpl"));
+                panelArchErr.setText(setCompilation(rutaSinExt + ".err"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un código fuente a compilar!");
+                String archivo = abrirArchivo();
+                if (texto != "") {
+                    limpiarVentana();
+                    panelArchFte.setText(archivo);
+                }
+            }
+        } catch (Exception ev) {
+            JOptionPane.showMessageDialog(null, "Error al seleccionar el archivo *.fte, error: " + ev);
+        }
+    }
+    
+        private String setCompilation(String rutaArch) {
+        String aux;
+        String tupla = "";
+        FileReader archivos;
+        try {
+            archivos = new FileReader(rutaArch);
+            BufferedReader lee = new BufferedReader(archivos);
+            while ((aux = lee.readLine()) != null) {
+                tupla += aux + "\n";
+            }
+            lee.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontro el archivo *.tpl" + e);
+        }
+        return tupla;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
