@@ -57,4 +57,5 @@ public class Globales {
     public final String ERROR = "ERROR LEXICOGRAFICO";
     public final String TOKEN_INV = "TOKEN INVALIDO";
     public final String RESTO_MUNDO = "RESTO DEL MUNDO";
+    public final String ERROR_S = "ERROR SINTÁCTICO";
 }
