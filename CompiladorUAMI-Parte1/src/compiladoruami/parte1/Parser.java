@@ -40,64 +40,64 @@ public class Parser {
         Parea(G1.ID);
         Parea(";");
     }
-    
-    private void Enunc_comp() throws IOException{
+
+    private void Enunc_comp() throws IOException {
         Parea(G1.COMIENZA);
-        while(!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)){
+        while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
             Enunciado();
         }
         Parea(G1.TERMINA);
     }
-    
-    private void Enunciado() throws IOException{
-        switch (preanalisis[1]) {
-            case G1.COMIENZA:
+
+    private void Enunciado() throws IOException {
+        switch (preanalisis[0]) {
+            case "cominza":
                 Enunc_comp();
                 break;
-            case G1.ID:
+            case "identificador":
                 Asignacion();
                 break;
-            case G1.SI:
+            case "si":
                 Enunc_condicional();
                 break;
-            case G1.MIENTRAS:
+            case "mientras":
                 Enunc_mientras();
                 break;
-            case G1.PARA:
+            case "para":
                 Enunc_para();
                 break;
-            case G1.IMPRIME:
+            case "imprime":
                 Enunc_impresion();
                 break;
-            case G1.REPITE:
+            case "repite":
                 Enunc_repite();
                 break;
             default:
                 Parea(";");
-                break;
+            //break;
         }
     }
-    
-    private void Asignacion() throws IOException{
+
+    private void Asignacion() throws IOException {
         Parea(G1.ID);
-        Parea(G1.ASIGNACION);
+        Parea(G1.ASG);
         Expresion();
         Parea(";");
     }
-    
-    private void Enunc_impresion() throws IOException{
+
+    private void Enunc_impresion() throws IOException {
         Parea(G1.IMPRIME);
         Parea("(");
         Parea(G1.CADENA);
-        while(!preanalisis[0].equals(")")){
+        while (!preanalisis[0].equals(")")) {
             Parea(",");
             Expresion();
         }
         Parea(")");
         Parea(";");
     }
-    
-    private void Enunc_para() throws IOException{
+
+    private void Enunc_para() throws IOException {
         Parea(G1.PARA);
         Asignacion();
         Parea(G1.A);
@@ -105,70 +105,70 @@ public class Parser {
         Parea(G1.HAZ);
         Enunc_comp();
     }
-    
-    private void Enunc_condicional() throws IOException{
+
+    private void Enunc_condicional() throws IOException {
         Parea(G1.SI);
         Expresion();
         Parea(G1.ENTONCES);
         Enunc_comp();
-        if(preanalisis[1].equals(G1.OTRO)){
+        if (preanalisis[1].equals(G1.OTRO)) {
             Parea(G1.OTRO);
             Enunc_comp();
         }
     }
-    
-    private void Enunc_mientras() throws IOException{
+
+    private void Enunc_mientras() throws IOException {
         Parea(G1.MIENTRAS);
         Expresion();
         Parea(G1.HAZ);
         Enunc_comp();
     }
-    
-    private void Enunc_repite() throws IOException{
+
+    private void Enunc_repite() throws IOException {
         Parea(G1.REPITE);
         Enunc_comp();
         Parea(G1.HASTA);
         Expresion();
         Parea(";");
     }
-    
-    private void Expresion() throws IOException{
+
+    private void Expresion() throws IOException {
         Exp_simple();
-        if(preanalisis[1].equals(G1.RELOP)){
+        if (preanalisis[1].equals(G1.RELOP)) {
             Parea(G1.RELOP);
             Exp_simple();
-        }else{
-            if(preanalisis[1].equals(G1.LOGOP)){
+        } else {
+            if (preanalisis[1].equals(G1.LOGOP)) {
                 Parea(G1.LOGOP);
                 Exp_simple();
             }
         }
     }
-    
-    private void Exp_simple() throws IOException{
+
+    private void Exp_simple() throws IOException {
         Termino();
-        while(preanalisis[1].equals(G1.ADDOP)){
+        while (preanalisis[1].equals(G1.ADDOP)) {
             Parea(G1.ADDOP);
             Termino();
         }
     }
-    
-    private void Termino () throws IOException{
+
+    private void Termino() throws IOException {
         Factor();
-        while(preanalisis[1].equals(G1.MULOP)){
+        while (preanalisis[1].equals(G1.MULOP)) {
             Parea(G1.MULOP);
             Termino();
         }
     }
-    
-    private void Factor() throws IOException{
-        switch (preanalisis[1]){
+
+    private void Factor() throws IOException {
+        switch (preanalisis[0]) {
             case "(":
                 Parea("(");
                 Expresion();
                 Parea(")");
                 break;
-            case G1.NUM_ENT:
+            case "entero":
                 Parea(G1.NUM_ENT);
                 break;
             default:
@@ -176,15 +176,14 @@ public class Parser {
                 break;
         }
     }
-       
-    /*private void Secuencia() throws IOException {
-        Parea(G1.COMIENZA);
-        while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
-            Asignacion();
-        }
-        Parea(G1.TERMINA);
-    }*/
 
+    /*private void Secuencia() throws IOException {
+     Parea(G1.COMIENZA);
+     while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
+     Asignacion();
+     }
+     Parea(G1.TERMINA);
+     }*/
     public boolean Parea(String se_espera) throws IOException {
         if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) { //preanalisis[0].equals(se_espera)
             int pos = A1.ALexico(G1, T1);
@@ -192,11 +191,13 @@ public class Parser {
             preanalisis[1] = T1.Obtener_Token(pos);
             System.out.println("Preanalisis [0]:" + preanalisis[0] + "\n"
                     + "Preanalisis[1]:" + preanalisis[1] + "\n");
+            
             return true;
         } else {
             UAMI.errores++;
-            UAMI.wr2.append("Tipo de Error: "+ G1.ERROR_S +", en la linea: "+
-                    UAMI.linea+"; Se esperaba un: "+se_espera+"\n");
+            UAMI.wr2.append("Tipo de Error: " + G1.ERROR_S + ", en la linea: "
+                    + UAMI.linea + "; Se esperaba un: " + se_espera + "\n");
+           
             return false;
         }
     }
