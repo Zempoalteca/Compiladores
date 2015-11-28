@@ -26,12 +26,12 @@ public class Parser {
     }
 
     void Inicio() throws IOException {
-        int pos = 0;
-        pos = A1.ALexico(G1, T1);
+        int pos = A1.ALexico(G1, T1);
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
-        Secuencia();
+        //Secuencia();
+        Enunc_comp();
         Parea(G1.HECHO);
     }
 
@@ -40,21 +40,150 @@ public class Parser {
         Parea(G1.ID);
         Parea(";");
     }
-
-    private void Secuencia() throws IOException {
+    
+    private void Enunc_comp() throws IOException{
+        Parea(G1.COMIENZA);
+        while(!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)){
+            Enunciado();
+        }
+        Parea(G1.TERMINA);
+    }
+    
+    private void Enunciado() throws IOException{
+        switch (preanalisis[1]) {
+            case G1.COMIENZA:
+                Enunc_comp();
+                break;
+            case G1.ID:
+                Asignacion();
+                break;
+            case G1.SI:
+                Enunc_condicional();
+                break;
+            case G1.MIENTRAS:
+                Enunc_mientras();
+                break;
+            case G1.PARA:
+                Enunc_para();
+                break;
+            case G1.IMPRIME:
+                Enunc_impresion();
+                break;
+            case G1.REPITE:
+                Enunc_repite();
+                break;
+            default:
+                Parea(";");
+                break;
+        }
+    }
+    
+    private void Asignacion() throws IOException{
+        Parea(G1.ID);
+        Parea(G1.ASIGNACION);
+        Expresion();
+        Parea(";");
+    }
+    
+    private void Enunc_impresion() throws IOException{
+        Parea(G1.IMPRIME);
+        Parea("(");
+        Parea(G1.CADENA);
+        while(!preanalisis[0].equals(")")){
+            Parea(",");
+            Expresion();
+        }
+        Parea(")");
+        Parea(";");
+    }
+    
+    private void Enunc_para() throws IOException{
+        Parea(G1.PARA);
+        Asignacion();
+        Parea(G1.A);
+        Expresion();
+        Parea(G1.HAZ);
+        Enunc_comp();
+    }
+    
+    private void Enunc_condicional() throws IOException{
+        Parea(G1.SI);
+        Expresion();
+        Parea(G1.ENTONCES);
+        Enunc_comp();
+        if(preanalisis[1].equals(G1.OTRO)){
+            Parea(G1.OTRO);
+            Enunc_comp();
+        }
+    }
+    
+    private void Enunc_mientras() throws IOException{
+        Parea(G1.MIENTRAS);
+        Expresion();
+        Parea(G1.HAZ);
+        Enunc_comp();
+    }
+    
+    private void Enunc_repite() throws IOException{
+        Parea(G1.REPITE);
+        Enunc_comp();
+        Parea(G1.HASTA);
+        Expresion();
+        Parea(";");
+    }
+    
+    private void Expresion() throws IOException{
+        Exp_simple();
+        if(preanalisis[1].equals(G1.RELOP)){
+            Parea(G1.RELOP);
+            Exp_simple();
+        }else{
+            if(preanalisis[1].equals(G1.LOGOP)){
+                Parea(G1.LOGOP);
+                Exp_simple();
+            }
+        }
+    }
+    
+    private void Exp_simple() throws IOException{
+        Termino();
+        while(preanalisis[1].equals(G1.ADDOP)){
+            Parea(G1.ADDOP);
+            Termino();
+        }
+    }
+    
+    private void Termino () throws IOException{
+        Factor();
+        while(preanalisis[1].equals(G1.MULOP)){
+            Parea(G1.MULOP);
+            Termino();
+        }
+    }
+    
+    private void Factor() throws IOException{
+        switch (preanalisis[1]){
+            case "(":
+                Parea("(");
+                Expresion();
+                Parea(")");
+                break;
+            case G1.NUM_ENT:
+                Parea(G1.NUM_ENT);
+                break;
+            default:
+                Parea(G1.ID);
+                break;
+        }
+    }
+       
+    /*private void Secuencia() throws IOException {
         Parea(G1.COMIENZA);
         while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
             Asignacion();
         }
         Parea(G1.TERMINA);
-    }
-
-    private void Asignacion() throws IOException {
-        Parea(G1.ID);
-        Parea(G1.ASG);
-        Parea(G1.NUM_ENT);
-        Parea(";");
-    }
+    }*/
 
     public boolean Parea(String se_espera) throws IOException {
         if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) { //preanalisis[0].equals(se_espera)
@@ -66,9 +195,9 @@ public class Parser {
             return true;
         } else {
             UAMI.errores++;
-            UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", se esperaba: \"" + se_espera + "\", tipo de error: ERROR SINTACTICO\n");
+            UAMI.wr2.append("Tipo de Error: "+ G1.ERROR_S +", en la linea: "+
+                    UAMI.linea+"; Se esperaba un: "+se_espera+"\n");
             return false;
         }
     }
-
 }
