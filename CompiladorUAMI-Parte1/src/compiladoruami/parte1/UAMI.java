@@ -86,40 +86,14 @@ public class UAMI {
         A = new Alex(Archivo_fte);
         A.Llena_Buffer();
         
-        wr1.write("* Archivo Tupla *\n  En este archivo se encuentran los Lexemas reconocidos por el Analizador Lexicografico\n\n");
+        wr1.write("* Archivo Tupla *\n  En este archivo se encuentran los Lexemas reconocidos por el Analizador Lexicografico");
         wr1.append("\n\n                    Lexema");
         
-        //Llamada al analizador lexicografico
+        
         Globales G = new Globales();
+        //Llamada al analizador sintactico
         Parser P = new Parser(A,G,T);
         P.Inicio();
-        
-        
-        
-                /*
-         T1 = new Tabla_de_Simbolos();
-         T1.Inicializa_Palabras_Reservadas();
-         A1 = new Alex(Archivo_fte);
-         Object tipo;
-
-         Globales G = new Globales();
-         A1.Llena_Buffer();
-
-         do {
-         tipo = A1.ALexico(G, T1);
-         //tipo.getClass().toString();
-         String tipo_Int = "class java.lang.Integer";
-         if (tipo != G.ERROR && tipo != G.TOKEN_INV) {
-         if (!(tipo.getClass().toString().equals(tipo_Int))) {
-         wr1.append("Linea: " + UAMI.linea + "\t(" + tokenval + ",\t" + tipo + ")\n");
-         } else {
-         wr1.append("Linea: " + UAMI.linea + "\t(" + T1.Obtener_Lexema((int) tipo) + ",\t" + T1.Obtener_Token((int) tipo) + ")\n");
-         }
-         } else {
-         panelResComp.setText(panelResComp.getText() + "<<<<<ERROR DE COMPILACION>>>>>\n");
-         }
-         } while (!tipo.equals(G.HECHO));
-        */
         panelResComp.append("\nLineas analizadas: " + (linea - 1));
         wr1.append("\nLineas analizadas: " + (linea - 1)+"\n");
         panelResComp.append("\nErrores encontrados: " + errores);
