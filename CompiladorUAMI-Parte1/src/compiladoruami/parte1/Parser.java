@@ -72,15 +72,18 @@ public class Parser {
             case "repite":
                 Enunc_repite();
                 break;
+            case ";":
+                Parea(";");
             default:
-                if(preanalisis[1].equals(G1.ID)){
+                Asignacion();
+                /*if(preanalisis[1].equals(G1.ID)){
                     Asignacion();
                 }else{
                     if(preanalisis[1].equals(G1.ASIGNACION)){
                         
                     }
                     Parea(";");
-                }
+                }*/
             break;
         }
     }
@@ -121,10 +124,10 @@ public class Parser {
         Parea(G1.SI);
         Expresion();
         Parea(G1.ENTONCES);
-        Enunc_comp();
+        Enunciado();
         if (preanalisis[1].equals(G1.OTRO)) {
             Parea(G1.OTRO);
-            Enunc_comp();
+            Enunciado();
         }
     }
 
