@@ -51,7 +51,7 @@ public class Parser {
 
     private void Enunciado() throws IOException {
         switch (preanalisis[0]) {
-            case "cominza":
+            case "comienza":
                 Enunc_comp();
                 break;
             case "identificador":
@@ -74,7 +74,7 @@ public class Parser {
                 break;
             default:
                 Parea(";");
-            //break;
+            break;
         }
     }
 
@@ -162,7 +162,7 @@ public class Parser {
     }
 
     private void Factor() throws IOException {
-        switch (preanalisis[0]) {
+        switch (preanalisis[0]) {                   //No es preanalisis de 1???
             case "(":
                 Parea("(");
                 Expresion();
