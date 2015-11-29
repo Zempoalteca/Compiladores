@@ -51,7 +51,7 @@ public class Alex {
                     UAMI.errores++;
                     UAMI.linea++;
                     UAMI.tokenval = Lexbuf;
-                    UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Se cerro de forma incorrecta el Comentario, tipo de error: " + G.ERROR + "\n");
+                    UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Se cerro de forma incorrecta el Comentario, tipo de error: " + G.ERROR + "\n");
                     return ALexico(g, t);              
                 }
             }
@@ -83,7 +83,7 @@ public class Alex {
                 UAMI.errores++;
                 UAMI.linea++;
                 UAMI.tokenval = Lexbuf;
-                UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Se cerro de forma incorrecta la cadena, tipo de error: " + G.ERROR + "\n");
+                UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Se cerro de forma incorrecta la cadena, tipo de error: " + G.ERROR + "\n");
                 return ALexico(g, t);              
             }
         }
@@ -168,7 +168,7 @@ public class Alex {
                 Lexbuf = Lexbuf + String.valueOf(c);
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
-                UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
+                UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
                 //return G.ERROR;
                 return -3;              //Error
             } else {
@@ -205,7 +205,7 @@ public class Alex {
                 Lexbuf = Lexbuf + String.valueOf(c);
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
-                UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
+                UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
                 //return G.ERROR;
                 return -3;              //Error
             } else {
@@ -254,7 +254,7 @@ public class Alex {
             }
             Deslee();
             UAMI.errores++;
-            UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Falta agregar un |, tipo de error: " + G.ERROR + "\n");
+            UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Falta agregar un |, tipo de error: " + G.ERROR + "\n");
             //UAMI.tokenval = Lexbuf;
             //return G.ERROR;
             return -3;              //Error
@@ -277,7 +277,7 @@ public class Alex {
             }
             Deslee();
             UAMI.errores++;
-            UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Falta agregar un &, tipo de error: " + G.ERROR + "\n");
+            UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Falta agregar un &, tipo de error: " + G.ERROR + "\n");
             //UAMI.tokenval = Lexbuf;
             //return G.ERROR;
             return -3;              //Error
@@ -290,7 +290,7 @@ public class Alex {
                 Lexbuf = Lexbuf + String.valueOf(c);
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
-                UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
+                UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
                 //return G.ERROR;
                 return -3;              //Error
             } else {
@@ -389,7 +389,7 @@ public class Alex {
         /*Gramatica que reconoce los token's invalidos*/
         if (c == '#' || c == '@' || c == '$' || c == '?' || c == '¿' || c == '^' || c == '~' || c == ']' || c == '[') {
             UAMI.errores++;
-            UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", TOKEN INVALIDO: " + c + "\n");
+            UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; TOKEN INVALIDO: " + c + "\n");
             return ALexico(g, t);
         }
         /*Gramatica que reconoce final de archivo*/
