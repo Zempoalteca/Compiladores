@@ -141,7 +141,7 @@ public class Alex {
                 if (pos != -1) {
                     return pos;
                 } else {
-                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.EQ);
+                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                     return pos;
                 }
                 //UAMI.tokenval = Lexbuf;
@@ -179,7 +179,7 @@ public class Alex {
                     if (pos != -1) {
                         return pos;
                     } else {
-                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LE);
+                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
                     //UAMI.tokenval = Lexbuf;
@@ -192,7 +192,7 @@ public class Alex {
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LT);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                 return pos;
             }
             //UAMI.tokenval = Lexbuf;
@@ -216,7 +216,7 @@ public class Alex {
                     if (pos != -1) {
                         return pos;
                     } else {
-                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.GE);
+                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
                     //UAMI.tokenval = Lexbuf;
@@ -229,7 +229,7 @@ public class Alex {
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.GT);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                 return pos;
             }
             //UAMI.tokenval = Lexbuf;
@@ -246,7 +246,7 @@ public class Alex {
                 if (pos != -1) {
                     return pos;
                 } else {
-                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.OR);
+                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                     return pos;
                 }
                 //UAMI.tokenval = Lexbuf;
@@ -269,7 +269,7 @@ public class Alex {
                 if (pos != -1) {
                     return pos;
                 } else {
-                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.AND);
+                    pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                     return pos;
                 }
                 //UAMI.tokenval = Lexbuf;
@@ -301,7 +301,7 @@ public class Alex {
                     if (pos != -1) {
                         return pos;
                     } else {
-                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.NE);
+                        pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
                     //UAMI.tokenval = Lexbuf;
@@ -314,7 +314,7 @@ public class Alex {
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.NOT);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                 return pos;
             }
             //UAMI.tokenval = Lexbuf;
@@ -322,55 +322,59 @@ public class Alex {
         }
         /*Gramaticas que reconocen operaciones*/
         if (c == '+') {
+            Lexbuf =String.valueOf(c);
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MAS);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.ADDOP);
                 return pos;
             }
             //UAMI.tokenval = String.valueOf(c);
             //return G.ADDOP;
         }
         if (c == '*') {
-
+            Lexbuf =String.valueOf(c);
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MULT);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MULOP);
                 return pos;
             }
             //UAMI.tokenval = String.valueOf(c);
             //return G.MULOP;
         }
         if (c == '/') {
+            Lexbuf =String.valueOf(c);
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.DIV);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MULOP);
                 return pos;
             }
             //UAMI.tokenval = String.valueOf(c);
             //return G.MULOP;
         }
         if (c == '-') {
+            Lexbuf =String.valueOf(c);
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
             if (pos != -1) {
                 return pos;
             } else {
-                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MENOS);
+                pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.ADDOP);
                 return pos;
             }
             //UAMI.tokenval = String.valueOf(c);
             //return G.ADDOP;
         }
         if (c == '%') {
+            Lexbuf =String.valueOf(c);
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
             if (pos != -1) {
