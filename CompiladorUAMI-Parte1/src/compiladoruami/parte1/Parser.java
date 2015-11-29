@@ -220,8 +220,8 @@ public class Parser {
             //return true;
         } else {
             UAMI.errores++;
-            UAMI.wr2.append("Tipo de Error: " + G1.ERROR_S + ", en la linea: "
-                    + UAMI.linea + "; Se esperaba un: " + se_espera + "\n");
+            UAMI.wr2.append("Error "+UAMI.errores+" en la linea" + UAMI.linea + "; Se esperaba un: " + se_espera +" tipo de error: "
+                    + G1.ERROR_S +  "\n");
            
             //return false;
         }
