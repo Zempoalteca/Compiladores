@@ -54,9 +54,9 @@ public class Parser {
             case "comienza":
                 Enunc_comp();
                 break;
-            case "identificador":
+            /*case "identificador":
                 Asignacion();
-                break;
+                break;*/
             case "si":
                 Enunc_condicional();
                 break;
@@ -73,7 +73,11 @@ public class Parser {
                 Enunc_repite();
                 break;
             default:
-                Parea(";");
+                if(preanalisis[1].equals(G1.ID)){
+                    Asignacion();
+                }else{
+                    Parea(";");
+                }
             break;
         }
     }
@@ -162,7 +166,18 @@ public class Parser {
     }
 
     private void Factor() throws IOException {
-        switch (preanalisis[0]) {                   //No es preanalisis de 1???
+        if(preanalisis[0].equals("(")){
+            Parea("(");
+                Expresion();
+                Parea(")");
+        }else{
+            if(preanalisis[1].equals(G1.NUM_ENT)){
+                Parea(G1.NUM_ENT);
+            }else{
+                Parea(G1.ID);
+            }
+        }
+        /*switch (preanalisis[0]) {                   //No es preanalisis de 1???
             case "(":
                 Parea("(");
                 Expresion();
@@ -174,7 +189,7 @@ public class Parser {
             default:
                 Parea(G1.ID);
                 break;
-        }
+        }*/
     }
 
     /*private void Secuencia() throws IOException {
