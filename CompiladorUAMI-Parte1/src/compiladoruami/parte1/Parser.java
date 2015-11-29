@@ -76,6 +76,9 @@ public class Parser {
                 if(preanalisis[1].equals(G1.ID)){
                     Asignacion();
                 }else{
+                    if(preanalisis[1].equals(G1.ASIGNACION)){
+                        
+                    }
                     Parea(";");
                 }
             break;
@@ -90,12 +93,16 @@ public class Parser {
     }
 
     private void Enunc_impresion() throws IOException {
+        int primeraLinea = UAMI.linea;
+        int lineaActual;
         Parea(G1.IMPRIME);
         Parea("(");
         Parea(G1.CADENA);
-        while (!preanalisis[0].equals(")")) {
+        lineaActual=UAMI.linea;
+        while (!preanalisis[0].equals(")") && lineaActual==primeraLinea) {
             Parea(",");
             Expresion();
+            lineaActual=UAMI.linea;
         }
         Parea(")");
         Parea(";");
@@ -199,21 +206,21 @@ public class Parser {
      }
      Parea(G1.TERMINA);
      }*/
-    public boolean Parea(String se_espera) throws IOException {
+    public /*boolean*/void Parea(String se_espera) throws IOException {
         if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) { //preanalisis[0].equals(se_espera)
             int pos = A1.ALexico(G1, T1);
             preanalisis[0] = T1.Obtener_Lexema(pos);
             preanalisis[1] = T1.Obtener_Token(pos);
-            System.out.println("Preanalisis [0]:" + preanalisis[0] + "\n"
-                    + "Preanalisis[1]:" + preanalisis[1] + "\n");
+            /*System.out.println("Preanalisis [0]:" + preanalisis[0] + "\n"
+                    + "Preanalisis[1]:" + preanalisis[1] + "\n");*/
             
-            return true;
+            //return true;
         } else {
             UAMI.errores++;
             UAMI.wr2.append("Tipo de Error: " + G1.ERROR_S + ", en la linea: "
                     + UAMI.linea + "; Se esperaba un: " + se_espera + "\n");
            
-            return false;
+            //return false;
         }
     }
 }
