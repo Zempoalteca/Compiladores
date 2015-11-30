@@ -30,7 +30,6 @@ public class Parser {
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
-        //Secuencia();
         Enunc_comp();
         Parea(G1.HECHO);
     }
@@ -73,7 +72,6 @@ public class Parser {
             case ";":
                 Parea(";");
             default:
-
                 if (preanalisis[1].equals(G1.ID)) {
                     Asignacion();
                 } else {
@@ -201,7 +199,6 @@ public class Parser {
             int pos = A1.ALexico(G1, T1);
             preanalisis[0] = T1.Obtener_Lexema(pos);
             preanalisis[1] = T1.Obtener_Token(pos);
-           
         } else {
             UAMI.errores++;
             UAMI.wr2.append("Error " + UAMI.errores + " en la linea" + UAMI.linea + "; Se esperaba un: " + se_espera + " tipo de error: "
