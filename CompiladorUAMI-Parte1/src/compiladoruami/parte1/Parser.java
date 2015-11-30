@@ -30,7 +30,6 @@ public class Parser {
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
-        //Secuencia();
         Enunc_comp();
         Parea(G1.HECHO);
     }
