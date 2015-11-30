@@ -30,7 +30,6 @@ public class Parser {
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
-        //Secuencia();
         Enunc_comp();
         Parea(G1.HECHO);
     }
@@ -78,14 +77,12 @@ public class Parser {
                     Asignacion();
                 } else {
                     int posicion;
-                    posicion = -1;
                     posicion = A1.ALexico(G1, T1);
                     preanalisis[0] = T1.Obtener_Lexema(posicion);
                     preanalisis[1] = T1.Obtener_Token(posicion);
                     if (!(preanalisis[1].equals(G1.ERROR)) && !(preanalisis[1].equals(G1.TOKEN_INV))) {
                         Parea(G1.ENUNC_VALIDO);
                     }
-
                     break;
                 }
         }
@@ -187,7 +184,12 @@ public class Parser {
             if (preanalisis[1].equals(G1.NUM_ENT)) {
                 Parea(G1.NUM_ENT);
             } else {
-                Parea(G1.ID);
+                if(preanalisis[1].equals(G1.ID)){
+                    Parea(G1.ID);
+                }else{
+                    Parea(G1.EXP_VALIDA);
+                }
+                
             }
         }
         
