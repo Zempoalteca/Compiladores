@@ -30,6 +30,7 @@ public class Parser {
         preanalisis[0] = T1.Obtener_Lexema(pos);
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
+        //Secuencia();
         Enunc_comp();
         Parea(G1.HECHO);
     }
@@ -82,7 +83,7 @@ public class Parser {
                     preanalisis[1] = T1.Obtener_Token(posicion);
                     if (!(preanalisis[1].equals(G1.ERROR)) && !(preanalisis[1].equals(G1.TOKEN_INV))) {
                         Parea(G1.ENUNC_VALIDO);
-                    }
+                    }             
                     break;
                 }
         }
