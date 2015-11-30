@@ -254,7 +254,8 @@ public class CompiladorUAMI extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAbrirActionPerformed
 
     private void menuCréditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCréditosActionPerformed
-        JOptionPane.showMessageDialog(null, "Hecho por:\nZempoalteca Garrido Gabriel - Mat: 210311073");
+        JOptionPane.showMessageDialog(null, "Hecho por:\nZempoalteca Garrido Gabriel - Mat: 210311073"
+                + "\nSandoval Meza Leticia - Mat: 210344107 \nJimenez Martinez Cecilia - Mat:210309432"); 
     }//GEN-LAST:event_menuCréditosActionPerformed
 
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
