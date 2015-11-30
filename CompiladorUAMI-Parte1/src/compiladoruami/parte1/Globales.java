@@ -58,7 +58,7 @@ public class Globales {
     public final String TOKEN_INV = "TOKEN INVALIDO";
     public final String RESTO_MUNDO = "RESTO DEL MUNDO";
     public final String ERROR_S = "ERROR SINTÁCTICO";
-    public final String ENUNC_VALIDO ="ENUNCIADO VALIDO";
-    public final String EXP_VALIDA ="EXPRESION VALIDA";
+    public final String ENUNC_VALIDO = "ENUNCIADO VALIDO";
+    public final String EXP_VALIDA = "EXPRESION VALIDA";
     
 }
