@@ -50,13 +50,11 @@ public class Parser {
     }
 
     private void Enunciado() throws IOException {
+
         switch (preanalisis[0]) {
             case "comienza":
                 Enunc_comp();
                 break;
-            /*case "identificador":
-                Asignacion();
-                break;*/
             case "si":
                 Enunc_condicional();
                 break;
@@ -75,16 +73,21 @@ public class Parser {
             case ";":
                 Parea(";");
             default:
-                Asignacion();
-                /*if(preanalisis[1].equals(G1.ID)){
+
+                if (preanalisis[1].equals(G1.ID)) {
                     Asignacion();
-                }else{
-                    if(preanalisis[1].equals(G1.ASIGNACION)){
-                        
+                } else {
+                    int posicion;
+                    posicion = -1;
+                    posicion = A1.ALexico(G1, T1);
+                    preanalisis[0] = T1.Obtener_Lexema(posicion);
+                    preanalisis[1] = T1.Obtener_Token(posicion);
+                    if (!(preanalisis[1].equals(G1.ERROR)) && !(preanalisis[1].equals(G1.TOKEN_INV))) {
+                        Parea(G1.ENUNC_VALIDO);
                     }
-                    Parea(";");
-                }*/
-            break;
+
+                    break;
+                }
         }
     }
 
@@ -101,11 +104,11 @@ public class Parser {
         Parea(G1.IMPRIME);
         Parea("(");
         Parea(G1.CADENA);
-        lineaActual=UAMI.linea;
-        while (!preanalisis[0].equals(")") && lineaActual==primeraLinea) {
+        lineaActual = UAMI.linea;
+        while (!preanalisis[0].equals(")") && lineaActual == primeraLinea) {
             Parea(",");
             Expresion();
-            lineaActual=UAMI.linea;
+            lineaActual = UAMI.linea;
         }
         Parea(")");
         Parea(";");
@@ -176,54 +179,30 @@ public class Parser {
     }
 
     private void Factor() throws IOException {
-        if(preanalisis[0].equals("(")){
+        if (preanalisis[0].equals("(")) {
             Parea("(");
-                Expresion();
-                Parea(")");
-        }else{
-            if(preanalisis[1].equals(G1.NUM_ENT)){
+            Expresion();
+            Parea(")");
+        } else {
+            if (preanalisis[1].equals(G1.NUM_ENT)) {
                 Parea(G1.NUM_ENT);
-            }else{
+            } else {
                 Parea(G1.ID);
             }
         }
-        /*switch (preanalisis[0]) {                   //No es preanalisis de 1???
-            case "(":
-                Parea("(");
-                Expresion();
-                Parea(")");
-                break;
-            case "entero":
-                Parea(G1.NUM_ENT);
-                break;
-            default:
-                Parea(G1.ID);
-                break;
-        }*/
+        
     }
 
-    /*private void Secuencia() throws IOException {
-     Parea(G1.COMIENZA);
-     while (!preanalisis[1].equals(G1.HECHO) && !preanalisis[0].equals(G1.TERMINA)) {
-     Asignacion();
-     }
-     Parea(G1.TERMINA);
-     }*/
-    public /*boolean*/void Parea(String se_espera) throws IOException {
-        if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) { //preanalisis[0].equals(se_espera)
+    public  void Parea(String se_espera) throws IOException {
+        if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) {
             int pos = A1.ALexico(G1, T1);
             preanalisis[0] = T1.Obtener_Lexema(pos);
             preanalisis[1] = T1.Obtener_Token(pos);
-            /*System.out.println("Preanalisis [0]:" + preanalisis[0] + "\n"
-                    + "Preanalisis[1]:" + preanalisis[1] + "\n");*/
-            
-            //return true;
+           
         } else {
             UAMI.errores++;
-            UAMI.wr2.append("Error "+UAMI.errores+" en la linea" + UAMI.linea + "; Se esperaba un: " + se_espera +" tipo de error: "
-                    + G1.ERROR_S +  "\n");
-           
-            //return false;
+            UAMI.wr2.append("Error " + UAMI.errores + " en la linea" + UAMI.linea + "; Se esperaba un: " + se_espera + " tipo de error: "
+                    + G1.ERROR_S + "\n");
         }
     }
 }
