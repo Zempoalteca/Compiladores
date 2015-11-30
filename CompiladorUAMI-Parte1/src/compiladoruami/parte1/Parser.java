@@ -112,11 +112,13 @@ public class Parser {
 
     private void Enunc_para() throws IOException {
         Parea(G1.PARA);
-        Asignacion();
+        Parea(G1.ID);
+        Parea(G1.ASG);
+        Exp_simple();
         Parea(G1.A);
         Expresion();
         Parea(G1.HAZ);
-        Enunc_comp();
+        Enunciado();
     }
 
     private void Enunc_condicional() throws IOException {
