@@ -46,8 +46,6 @@ public class UAMI {
                 FileWriter w2 = new FileWriter(archivo_err);
                 bw2 = new BufferedWriter(w2);
                 wr2 = new PrintWriter(bw2);
-                //wr1.append("  En este archivo se encuentran los Lexemas reconocidos por el Analizador Lexicografico\n\n");
-                //wr1.append("         \tLexema\tToken\n");
                 wr2.append("* Archivo error *\n");
                 wr2.append("Muestra los errores que se presentaron en el proceso de compilación:\n");
             } else {
