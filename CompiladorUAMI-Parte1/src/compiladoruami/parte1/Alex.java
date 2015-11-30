@@ -103,8 +103,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.NUM_ENT);
                 return pos;
             }
-            //UAMI.tokenval = Lexbuf;
-            //return (G.NUM_ENT);
+            
         }
         /*Gramatica que reconoce los Identificadores o las palabras reservadas*/
         if (Character.isAlphabetic(c) || c == '_') {
@@ -127,13 +126,6 @@ public class Alex {
         if (c == '=') {
             Lexbuf = Lexbuf + String.valueOf(c);
             c = LeeCaracter();
-            /*if (c == '+' || c == '-' || c == '/' || c == '*' || c == '%' || c == '<' || c == '>' || c == '!') {
-             Lexbuf = Lexbuf + String.valueOf(c);
-             UAMI.tokenval = Lexbuf;
-             UAMI.errores++;
-             UAMI.wr2.append("Error " + UAMI.errores + " en la linea :" + UAMI.linea + ", Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
-             return G.ERROR;
-             } else {*/
             if (c == '=') {
                 Lexbuf = Lexbuf + String.valueOf(c);
                 int pos;
@@ -144,10 +136,8 @@ public class Alex {
                     pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                     return pos;
                 }
-                //UAMI.tokenval = Lexbuf;
-                //return G.RELOP;
+                
             }
-            //}
             Deslee();
             int pos;
             pos = t.Buscar_Simbolo(Lexbuf);
@@ -157,8 +147,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.ASIGNACION);
                 return pos;
             }
-            //UAMI.tokenval = Lexbuf;
-            //return G.RELOP;
+           
         }
         /*Gramaticas que reconocen los Operadores Lógicos*/
         if (c == '<') {
@@ -169,8 +158,8 @@ public class Alex {
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
                 UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
-                //return G.ERROR;
-                return -3;              //Error
+                
+                return -3;             
             } else {
                 if (c == '=') {
                     Lexbuf = Lexbuf + String.valueOf(c);
@@ -182,8 +171,6 @@ public class Alex {
                         pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
-                    //UAMI.tokenval = Lexbuf;
-                    //return G.RELOP;
                 }
             }
             Deslee();
@@ -195,8 +182,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                 return pos;
             }
-            //UAMI.tokenval = Lexbuf;
-            //return G.RELOP;
+            
         }
         if (c == '>') {
             Lexbuf = Lexbuf + String.valueOf(c);
@@ -206,8 +192,8 @@ public class Alex {
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
                 UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
-                //return G.ERROR;
-                return -3;              //Error
+                
+                return -3;
             } else {
                 if (c == '=') {
                     Lexbuf = Lexbuf + String.valueOf(c);
@@ -219,8 +205,7 @@ public class Alex {
                         pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
-                    //UAMI.tokenval = Lexbuf;
-                    //return G.RELOP;
+                    
                 }
             }
             Deslee();
@@ -232,8 +217,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                 return pos;
             }
-            //UAMI.tokenval = Lexbuf;
-            //return G.RELOP;
+          
         }
         /*Gramatica que reconoce && o ||*/
         if (c == '|') {
@@ -249,15 +233,11 @@ public class Alex {
                     pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                     return pos;
                 }
-                //UAMI.tokenval = Lexbuf;
-                //return G.LOGOP;
             }
             Deslee();
             UAMI.errores++;
             UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Falta agregar un |, tipo de error: " + G.ERROR + "\n");
-            //UAMI.tokenval = Lexbuf;
-            //return G.ERROR;
-            return -3;              //Error
+            return -3;             
         }
         if (c == '&') {
             Lexbuf = Lexbuf + String.valueOf(c);
@@ -272,15 +252,12 @@ public class Alex {
                     pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                     return pos;
                 }
-                //UAMI.tokenval = Lexbuf;
-                //return G.LOGOP;
+                
             }
             Deslee();
             UAMI.errores++;
             UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Falta agregar un &, tipo de error: " + G.ERROR + "\n");
-            //UAMI.tokenval = Lexbuf;
-            //return G.ERROR;
-            return -3;              //Error
+            return -3;
         }
         /*Gramatica que reconoce distinto o negación*/
         if (c == '!') {
@@ -291,8 +268,8 @@ public class Alex {
                 UAMI.tokenval = Lexbuf;
                 UAMI.errores++;
                 UAMI.wr2.append("Error " + UAMI.errores + " en la linea: " + UAMI.linea + "; Combinación de caracteres implicítos inválida tipo de error: " + G.ERROR + "\n");
-                //return G.ERROR;
-                return -3;              //Error
+                
+                return -3;
             } else {
                 if (c == '=') {
                     Lexbuf = Lexbuf + String.valueOf(c);
@@ -304,9 +281,7 @@ public class Alex {
                         pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.RELOP);
                         return pos;
                     }
-                    //UAMI.tokenval = Lexbuf;
-                    //return G.RELOP;
-                }
+                    }
             }
             Deslee();
             int pos;
@@ -317,8 +292,6 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.LOGOP);
                 return pos;
             }
-            //UAMI.tokenval = Lexbuf;
-            //return G.LOGOP;
         }
         /*Gramaticas que reconocen operaciones*/
         if (c == '+') {
@@ -331,8 +304,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.ADDOP);
                 return pos;
             }
-            //UAMI.tokenval = String.valueOf(c);
-            //return G.ADDOP;
+            
         }
         if (c == '*') {
             Lexbuf =String.valueOf(c);
@@ -344,8 +316,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MULOP);
                 return pos;
             }
-            //UAMI.tokenval = String.valueOf(c);
-            //return G.MULOP;
+            
         }
         if (c == '/') {
             Lexbuf =String.valueOf(c);
@@ -357,8 +328,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MULOP);
                 return pos;
             }
-            //UAMI.tokenval = String.valueOf(c);
-            //return G.MULOP;
+            
         }
         if (c == '-') {
             Lexbuf =String.valueOf(c);
@@ -370,8 +340,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.ADDOP);
                 return pos;
             }
-            //UAMI.tokenval = String.valueOf(c);
-            //return G.ADDOP;
+            
         }
         if (c == '%') {
             Lexbuf =String.valueOf(c);
@@ -383,8 +352,7 @@ public class Alex {
                 pos = t.Inserta_en_Tabla_Simbolos(Lexbuf, G.MODULO);
                 return pos;
             }
-            //UAMI.tokenval = String.valueOf(c);
-            //return G.MODULO;
+            
         }
         /*Gramatica que reconoce los token's invalidos*/
         if (c == '#' || c == '@' || c == '$' || c == '?' || c == '¿' || c == '^' || c == '~' || c == ']' || c == '[') {
