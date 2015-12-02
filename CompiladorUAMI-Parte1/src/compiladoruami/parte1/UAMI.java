@@ -29,6 +29,7 @@ public class UAMI {
     JTextArea panelCompilacion;
     Alex A;
     Tabla_de_Simbolos T;
+    Generador_Codigo_Intermedio GI;
 
     private void crearArchivos(String Nombre_Archivo) {
         int tamaño_N = Nombre_Archivo.length();
@@ -100,10 +101,10 @@ public class UAMI {
         wr1.write("* Archivo Tupla *\n  En este archivo se encuentran los Lexemas reconocidos por el Analizador Lexicografico");
         wr1.append("\n\n                    Lexema");
         
-        
+        GI = new Generador_Codigo_Intermedio();
         Globales G = new Globales();
         //Llamada al analizador sintactico
-        Parser P = new Parser(A,G,T);
+        Parser P = new Parser(A,G,T,GI);
         P.Inicio();
         panelResComp.append("\nLineas analizadas: " + (linea - 1));
         wr1.append("\nLineas analizadas: " + (linea - 1)+"\n");
