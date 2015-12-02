@@ -19,9 +19,9 @@ import javax.swing.JTextArea;
  */
 public class UAMI {
 
-    public static File archivo_tpl, archivo_err;
-    public static PrintWriter wr1, wr2;
-    public static BufferedWriter bw1, bw2;
+    public static File archivo_tpl, archivo_err, archivo_obj;
+    public static PrintWriter wr1, wr2, wr3;
+    public static BufferedWriter bw1, bw2, bw3;
     public static FileReader Archivo_fte;
     public static int linea = 1;
     public static String tokenval = null;
@@ -36,9 +36,11 @@ public class UAMI {
         try {
             archivo_tpl = new File(Nombre_sin_Extension + "tpl");
             archivo_err = new File(Nombre_sin_Extension + "err");
+            archivo_obj = new File(Nombre_sin_Extension + "obj");
             if (!archivo_tpl.exists() && !archivo_err.exists()) {
                 archivo_tpl.createNewFile();
                 archivo_err.createNewFile();
+                archivo_obj.createNewFile();
                 panelCompilacion.append("Se han creado los achivos *.tpl y *.err con exito\n\n");
                 FileWriter w1 = new FileWriter(archivo_tpl);
                 bw1 = new BufferedWriter(w1);
@@ -48,13 +50,19 @@ public class UAMI {
                 wr2 = new PrintWriter(bw2);
                 wr2.append("* Archivo error *\n");
                 wr2.append("Muestra los errores que se presentaron en el proceso de compilación:\n");
+                FileWriter w3 = new FileWriter(archivo_obj);
+                bw3 = new BufferedWriter(w3);
+                wr3 = new PrintWriter(bw3);
+                wr3.append("Contenido del archivo obj: \n");
+                
             } else {
                 archivo_tpl.delete();
                 archivo_err.delete();
+                archivo_obj.delete();
                 crearArchivos(Nombre_Archivo);
             }
         } catch (IOException e) {
-            panelCompilacion.append("No se pudieron crear los archivos *.tpl y *.err, Error: " + e + "\n");
+            panelCompilacion.append("No se pudieron crear los archivos *.tpl, *.err y *.obj Error: " + e + "\n");
         }
     }
 
@@ -63,6 +71,8 @@ public class UAMI {
         bw2.close();
         wr1.close();
         bw1.close();
+        wr3.close();
+        bw3.close();
     }
 
     public void compilador(String ruta_ArchFte, JTextArea panelResComp) throws IOException {
