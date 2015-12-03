@@ -8,7 +8,7 @@ package compiladoruami.parte1;
 
 /**
  *
- * @author Leticia
+ * @author Lety, Cecy & Gab
  */
 public class Generador_Codigo_Intermedio {
  
