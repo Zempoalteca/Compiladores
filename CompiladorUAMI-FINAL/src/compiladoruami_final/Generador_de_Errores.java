@@ -8,7 +8,7 @@ package compiladoruami_final;
 
 /**
  *
- * @author Leticia
+ * @author Lety, Cecy & Gab
  */
 public class Generador_de_Errores {
     
