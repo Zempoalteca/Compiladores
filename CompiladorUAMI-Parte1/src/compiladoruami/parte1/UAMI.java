@@ -38,7 +38,7 @@ public class UAMI {
             archivo_tpl = new File(Nombre_sin_Extension + "tpl");
             archivo_err = new File(Nombre_sin_Extension + "err");
             archivo_obj = new File(Nombre_sin_Extension + "obj");
-            if (!archivo_tpl.exists() && !archivo_err.exists()) {
+            if (!archivo_tpl.exists() && !archivo_err.exists() && !archivo_obj.exists()) {
                 archivo_tpl.createNewFile();
                 archivo_err.createNewFile();
                 archivo_obj.createNewFile();
