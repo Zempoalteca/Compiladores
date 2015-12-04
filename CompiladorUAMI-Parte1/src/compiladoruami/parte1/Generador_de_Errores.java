@@ -28,7 +28,8 @@ public class Generador_de_Errores {
                 UAMI.wr2.append("Tipo de Error:"+ G1.ERROR + ", en la Línea:"+
                 UAMI.linea +": " + G1.TOKEN_INV +": " + se_esperaba + "\n");
                 break;
-           
+            default:
+                //Errores sintácticos
                
                 
       
