@@ -30,12 +30,12 @@ public class Parser {
 
     void Inicio() throws IOException {
         int pos = A1.ALexico(G1, T1);
-        preanalisis[0] = T1.Obtener_Lexema(pos);
+        preanalisis[0] = T1.Obtener_Lexema(pos);        //[Lexema][Token]
         preanalisis[1] = T1.Obtener_Token(pos);
         Encabezado();
         Enunc_comp();
         Parea(G1.HECHO);
-        GI1.Emite(G1.HALT, null);
+        GI1.Emite(G1.HALT, G1.HECHO);
     }
 
     private void Encabezado() throws IOException {
@@ -105,7 +105,7 @@ public class Parser {
         int lineaActual;
         Parea(G1.IMPRIME);
         Parea("(");
-        GI1.Emite(null, null);
+        GI1.Emite(G1.COPIA, preanalisis[0]);
         Parea(G1.CADENA);
         lineaActual = UAMI.linea;
         while (!preanalisis[0].equals(")") && lineaActual == primeraLinea) {
@@ -113,35 +113,37 @@ public class Parser {
             Expresion();
             lineaActual = UAMI.linea;
         }
-        GI1.Emite(G1.COPIA, null);
+        GI1.Emite(G1.ELIMINA, null);
         Parea(")");
         Parea(";");
     }
 
     private void Enunc_para() throws IOException {
         String c;
-        int sal;
+        int salida,etiqueta;
         int entrada = 0;
         Parea(G1.PARA);
         GI1.Emite(G1.VALOR_I, String.valueOf(c=preanalisis[0]));
         Parea(G1.ID);
         Parea(G1.ASG);
-        Exp_simple();
+        //Exp_simple();
+        Expresion();
         GI1.Emite(G1.ASIGN, null);
         Parea(G1.A);
+        GI1.Emite(G1.ETIQUETA, String.valueOf(etiqueta=etiq++));
         Expresion();
         GI1.Emite(G1.VALOR_D, c);
         GI1.Emite(G1.RELOP, G1.LE);
-        GI1.Emite(G1.SI_FALSO_VE_A, String.valueOf(sal=etiq++));
+        GI1.Emite(G1.SI_FALSO_VE_A, String.valueOf(salida=etiq++));
         GI1.Emite(G1.VALOR_I, c);
         GI1.Emite(G1.VALOR_D, c);
-        GI1.Emite(G1.PUSH, String.valueOf(1));
+        GI1.Emite(G1.PUSH, String.valueOf(1));      //********Verificar si en verdad esto es un 1
         GI1.Emite(G1.ADDOP, G1.MAS);
         GI1.Emite(G1.ASIGN, null);
         Parea(G1.HAZ);
         Enunciado();
-        GI1.Emite(G1.VE_A, String.valueOf(entrada));
-        GI1.Emite(G1.ETIQUETA, String.valueOf(sal));
+        GI1.Emite(G1.VE_A, String.valueOf(etiqueta));
+        GI1.Emite(G1.ETIQUETA, String.valueOf(salida));
     }
 
     private void Enunc_condicional() throws IOException {
@@ -168,7 +170,8 @@ public class Parser {
         Expresion();
         GI1.Emite(G1.SI_FALSO_VE_A, String.valueOf(sal=etiq++));
         Parea(G1.HAZ);
-        Enunc_comp();
+        //Enunc_comp();
+        Enunciado();
         GI1.Emite(G1.VE_A, String.valueOf(cond));
         GI1.Emite(G1.ETIQUETA, String.valueOf(sal));
     }
@@ -177,7 +180,8 @@ public class Parser {
         int ciclo;
         Parea(G1.REPITE);
         GI1.Emite(G1.ETIQUETA, String.valueOf(ciclo=etiq++));
-        Enunc_comp();
+        //Enunc_comp();
+        Enunciado();
         Parea(G1.HASTA);
         Expresion();
         GI1.Emite(G1.SI_FALSO_VE_A, String.valueOf(ciclo));
@@ -185,15 +189,16 @@ public class Parser {
     }
 
     private void Expresion() throws IOException {
-        Exp_simple();
         String aux;
-        aux=preanalisis[0];
+        Exp_simple();
         if (preanalisis[1].equals(G1.RELOP)) {
+            aux=preanalisis[0];
             Parea(G1.RELOP);
             Exp_simple();
             GI1.Emite(G1.RELOP, aux);
         } else {
             if (preanalisis[1].equals(G1.LOGOP)) {
+                aux=preanalisis[0];
                 Parea(G1.LOGOP);
                 Exp_simple();
                 GI1.Emite(G1.LOGOP, aux);
@@ -202,10 +207,10 @@ public class Parser {
     }
 
     private void Exp_simple() throws IOException {
-        Termino();
         String aux;
-        aux=preanalisis[0];
+        Termino();
         while (preanalisis[1].equals(G1.ADDOP)) {
+            aux=preanalisis[0];
             Parea(G1.ADDOP);
             Termino();
             GI1.Emite(G1.ADDOP, aux);
@@ -213,10 +218,10 @@ public class Parser {
     }
 
     private void Termino() throws IOException {
-        Factor();
         String aux;
-        aux=preanalisis[0];
+        Factor();
         while (preanalisis[1].equals(G1.MULOP)) {
+            aux=preanalisis[0];
             Parea(G1.MULOP);
             Termino();
             GI1.Emite(G1.MULOP, aux);
@@ -234,8 +239,8 @@ public class Parser {
                 Parea(G1.NUM_ENT);
             } else {
                 if(preanalisis[1].equals(G1.ID)){
-                    Parea(G1.ID);
                     GI1.Emite(G1.VALOR_D, preanalisis[0]);
+                    Parea(G1.ID);
                 }else{
                     Parea(G1.EXP_VALIDA);
                 }
@@ -245,15 +250,17 @@ public class Parser {
         
     }
 
-    public  void Parea(String se_espera) throws IOException {
+    public boolean Parea(String se_espera) throws IOException {
         if (preanalisis[0].equals(se_espera) || preanalisis[1].equals(se_espera)) {
             int pos = A1.ALexico(G1, T1);
             preanalisis[0] = T1.Obtener_Lexema(pos);
             preanalisis[1] = T1.Obtener_Token(pos);
+            return true;
         } else {
             UAMI.errores++;
             UAMI.wr2.append("Error " + UAMI.errores + " en la linea" + UAMI.linea + "; Se esperaba un: " + se_espera + " tipo de error: "
                     + G1.ERROR_S + "\n");
+            return false;
         }
     }
 }
